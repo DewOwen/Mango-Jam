@@ -4,843 +4,1104 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GoldDrop Co. — Mango Jam</title>
+<title>GoldDrop Co. | Gold Drop Mango Jam</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #fffaf0;
-  color: #171717;
-  line-height: 1.6;
-}
-
-/* =====================================================
-   GOLD DROP INTRO SCREEN
-   ===================================================== */
-
-#intro {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background:
-    radial-gradient(circle at center, #211d08 0%, #050505 55%, #000 100%);
-  color: #ffd84d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  animation: introOut 0.9s ease 5.8s forwards;
-}
-
-/* scan lines */
-#intro::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.025) 0px,
-    rgba(255,255,255,0.025) 1px,
-    transparent 2px,
-    transparent 5px
-  );
-}
-
-.terminal {
-  width: min(920px, 92%);
-  min-height: 520px;
-  padding: 28px;
-  background: rgba(4,4,4,0.96);
-  border: 1px solid #8f751b;
-  box-shadow:
-    0 0 20px rgba(255,216,77,0.12),
-    inset 0 0 30px rgba(255,216,77,0.025);
-  position: relative;
-  z-index: 2;
-}
-
-.terminal-top {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #292929;
-  margin-bottom: 24px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #555;
-}
-
-.terminal-title {
-  margin-left: 8px;
-  color: #777;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  letter-spacing: 2px;
-}
-
-.big-drop {
-  text-align: center;
-  font-size: clamp(45px, 10vw, 105px);
-  line-height: 1;
-  font-weight: 900;
-  letter-spacing: 7px;
-  color: #ffd84d;
-  text-shadow:
-    0 0 8px rgba(255,216,77,0.8),
-    0 0 30px rgba(255,216,77,0.25);
-  margin: 10px 0 30px;
-  animation: glitch 0.16s infinite alternate;
-}
-
-.terminal-log {
-  font-family: "Courier New", monospace;
-  font-size: 14px;
-  line-height: 1.9;
-  color: #c9c9c9;
-  min-height: 205px;
-}
-
-.log-gold {
-  color: #ffd84d;
-}
-
-.log-green {
-  color: #78d878;
-}
-
-.log-white {
-  color: #eeeeee;
-}
-
-.loading-text {
-  font-family: "Courier New", monospace;
-  color: #777;
-  font-size: 12px;
-  margin-top: 10px;
-}
-
-.loading {
-  height: 14px;
-  border: 1px solid #555;
-  margin-top: 8px;
-  padding: 2px;
-}
-
-.loading-bar {
-  height: 100%;
-  width: 0;
-  background: #d9a900;
-  box-shadow: 0 0 8px rgba(255,216,77,0.5);
-  animation: loading 5.1s linear forwards;
-}
-
-.cursor {
-  display: inline-block;
-  width: 8px;
-  height: 15px;
-  background: #ffd84d;
-  margin-left: 3px;
-  animation: blink 0.65s infinite;
-}
-
-@keyframes loading {
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-@keyframes glitch {
-  from {
-    transform: translateX(-1px);
-  }
-  to {
-    transform: translateX(1px);
-  }
-}
-
-@keyframes introOut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-
-/* =====================================================
-   MAIN WEBSITE
-   ===================================================== */
-
-header {
-  background:
-    radial-gradient(circle at center, #3a2d08 0%, #191500 45%, #090909 100%);
-  color: white;
-  text-align: center;
-  padding: 65px 20px 75px;
-  border-bottom: 5px solid #d9a900;
-}
-
-.brand {
-  color: #f2c94c;
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-header h1 {
-  font-size: clamp(48px, 11vw, 100px);
-  line-height: 1;
-  color: #ffd84d;
-  letter-spacing: 4px;
-  margin-bottom: 10px;
-  text-shadow: 0 0 25px rgba(255,216,77,0.2);
-}
-
-header h2 {
-  font-size: clamp(22px, 5vw, 36px);
-  font-weight: 400;
-  margin-bottom: 18px;
-}
-
-.slogan {
-  font-size: 18px;
-  color: #eee;
-  font-style: italic;
-}
-
-.quality {
-  display: inline-block;
-  margin-top: 25px;
-  padding: 10px 23px;
-  border: 1px solid #e5bd36;
-  border-radius: 30px;
-  color: #ffd84d;
-  font-weight: bold;
-}
-
-.hero-mango {
-  font-size: 75px;
-  margin-top: 25px;
-}
-
-/* Main */
-
-main {
-  max-width: 1050px;
-  margin: auto;
-  padding: 35px 20px 65px;
-}
-
-section {
-  background: white;
-  margin: 25px 0;
-  padding: 32px;
-  border-radius: 18px;
-  box-shadow: 0 5px 22px rgba(0,0,0,0.07);
-  border-left: 5px solid #e1b52e;
-}
-
-section h2 {
-  color: #947000;
-  margin-bottom: 20px;
-  font-size: 28px;
-}
-
-/* Highlight */
-
-.highlight {
-  text-align: center;
-  background: #f1c644;
-  border: none;
-  padding: 38px 25px;
-}
-
-.highlight h2 {
-  color: #171717;
-  margin-bottom: 8px;
-}
-
-/* Ingredients */
-
-.ingredients {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.ingredient {
-  background: #fff8d9;
-  border: 1px solid #f0d56a;
-  border-radius: 15px;
-  padding: 24px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  transition: 0.25s;
-}
-
-.ingredient:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-}
-
-.ingredient span {
-  display: block;
-  font-size: 48px;
-  margin-bottom: 8px;
-}
-
-/* Members */
-
-.members {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.member {
-  background: #181818;
-  color: #ffd84d;
-  padding: 10px 19px;
-  border-radius: 25px;
-  font-weight: bold;
-}
-
-/* Process */
-
-.process {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-}
-
-.step {
-  background: #fff5c7;
-  border: 1px solid #e3c34d;
-  padding: 11px 14px;
-  border-radius: 12px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.arrow {
-  color: #a27b00;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* Ingredient explanation */
-
-.why {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.why-card {
-  background: #fafafa;
-  padding: 22px;
-  border-radius: 15px;
-  border-top: 4px solid #d8ad25;
-}
-
-.why-card h3 {
-  color: #9a7200;
-  margin-bottom: 10px;
-  font-size: 21px;
-}
-
-/* Brand concept */
-
-.concept {
-  background: linear-gradient(135deg, #181818, #342700);
-  color: white;
-  text-align: center;
-  border-left: none;
-}
-
-.concept h2 {
-  color: #ffd84d;
-}
-
-.quote {
-  font-size: 24px;
-  font-weight: bold;
-  color: #ffd84d;
-  margin-top: 18px;
-}
-
-/* Dates */
-
-.dates {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.date-box {
-  background: #fff8d9;
-  border-radius: 15px;
-  padding: 22px;
-  text-align: center;
-  border: 1px solid #e4c34f;
-}
-
-.date-box strong {
-  display: block;
-  color: #8e6900;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.date-box span {
-  display: block;
-  font-size: 22px;
-  font-weight: bold;
-  margin-top: 5px;
-}
-
-/* Footer */
-
-footer {
-  background: #111;
-  color: #aaa;
-  text-align: center;
-  padding: 28px 15px;
-  font-size: 14px;
-}
-
-footer strong {
-  color: #ffd84d;
-}
-
-/* =====================================================
-   MOBILE
-   ===================================================== */
-
-@media (max-width: 700px) {
-
-  .terminal {
-    min-height: 480px;
-    padding: 20px;
-  }
-
-  .terminal-log {
-    font-size: 11px;
-    line-height: 1.8;
-  }
-
-  .big-drop {
-    letter-spacing: 3px;
-    margin-bottom: 22px;
-  }
-
-  .ingredients,
-  .why,
-  .dates {
-    grid-template-columns: 1fr;
-  }
-
-  section {
-    padding: 23px;
-  }
-
-  .process {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .arrow {
-    display: none;
-  }
-
-  .step {
-    width: 100%;
-  }
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #050505;
+        color: #f5f5f5;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow-x: hidden;
+    }
+
+    /* =========================================================
+       HACKING / SYSTEM INTRO
+       ========================================================= */
+
+    #intro {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background:
+            radial-gradient(circle at center, #17120a 0%, #050505 45%, #000 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        animation: introExit 1.2s ease 6.8s forwards;
+    }
+
+    .scanlines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 3px,
+            rgba(212,175,55,0.035) 4px
+        );
+    }
+
+    .grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.12;
+        background-image:
+            linear-gradient(rgba(212,175,55,0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(212,175,55,0.15) 1px, transparent 1px);
+        background-size: 45px 45px;
+        transform: perspective(500px) rotateX(60deg) scale(2);
+        transform-origin: center bottom;
+    }
+
+    .terminal {
+        width: min(900px, 92%);
+        position: relative;
+        z-index: 2;
+        border: 1px solid #6e5a1b;
+        background: rgba(0,0,0,0.92);
+        box-shadow:
+            0 0 30px rgba(212,175,55,0.12),
+            inset 0 0 35px rgba(212,175,55,0.035);
+        padding: 28px;
+        animation: terminalIn 1s ease;
+    }
+
+    .terminal-header {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #30270d;
+        padding-bottom: 12px;
+        margin-bottom: 25px;
+        color: #806b22;
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .danger {
+        color: #c99d18;
+        animation: blink 0.8s infinite;
+    }
+
+    .system-title {
+        text-align: center;
+        font-size: clamp(48px, 10vw, 110px);
+        font-weight: 900;
+        letter-spacing: 14px;
+        color: #d4af37;
+        text-shadow:
+            0 0 8px rgba(212,175,55,0.8),
+            0 0 30px rgba(212,175,55,0.35);
+        margin: 10px 0 30px;
+        animation: glitch 2.4s infinite;
+    }
+
+    .terminal-lines {
+        min-height: 230px;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        line-height: 2;
+        color: #bda957;
+    }
+
+    .terminal-lines div {
+        opacity: 0;
+        animation: terminalLine 0.25s forwards;
+    }
+
+    .terminal-lines div:nth-child(1) { animation-delay: .5s; }
+    .terminal-lines div:nth-child(2) { animation-delay: 1s; }
+    .terminal-lines div:nth-child(3) { animation-delay: 1.5s; }
+    .terminal-lines div:nth-child(4) { animation-delay: 2s; }
+    .terminal-lines div:nth-child(5) { animation-delay: 2.5s; }
+    .terminal-lines div:nth-child(6) { animation-delay: 3s; }
+    .terminal-lines div:nth-child(7) { animation-delay: 3.5s; }
+    .terminal-lines div:nth-child(8) { animation-delay: 4s; }
+    .terminal-lines div:nth-child(9) { animation-delay: 4.5s; }
+    .terminal-lines div:nth-child(10) { animation-delay: 5s; }
+
+    .gold {
+        color: #ffd84d;
+    }
+
+    .warning {
+        color: #e3bb32;
+    }
+
+    .progress-container {
+        height: 5px;
+        background: #17130a;
+        margin-top: 15px;
+        overflow: hidden;
+        border: 1px solid #30270d;
+    }
+
+    .progress {
+        height: 100%;
+        width: 0;
+        background: #d4af37;
+        box-shadow: 0 0 15px #d4af37;
+        animation: load 5.7s linear forwards;
+    }
+
+    .access {
+        text-align: center;
+        margin-top: 18px;
+        color: #d4af37;
+        font-family: "Courier New", monospace;
+        letter-spacing: 4px;
+        font-size: 12px;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes terminalIn {
+        from {
+            opacity: 0;
+            transform: scale(.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes terminalLine {
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes load {
+        to {
+            width: 100%;
+        }
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: .35;
+        }
+    }
+
+    @keyframes glitch {
+        0%, 90%, 100% {
+            transform: translate(0);
+        }
+        92% {
+            transform: translate(-3px, 2px);
+        }
+        94% {
+            transform: translate(3px, -2px);
+        }
+        96% {
+            transform: translate(-2px, 0);
+        }
+    }
+
+    @keyframes introExit {
+        to {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+    }
+
+    /* =========================================================
+       MAIN WEBSITE
+       ========================================================= */
+
+    #website {
+        opacity: 0;
+        animation: websiteReveal 1.5s ease 6.9s forwards;
+    }
+
+    @keyframes websiteReveal {
+        to {
+            opacity: 1;
+        }
+    }
+
+    header {
+        min-height: 92vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 20px;
+        overflow: hidden;
+        border-bottom: 1px solid #3a2d0c;
+        background:
+            radial-gradient(circle at center, rgba(212,175,55,.11), transparent 35%),
+            linear-gradient(135deg, #0a0a0a, #030303);
+    }
+
+    header::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border: 1px solid rgba(212,175,55,.13);
+        border-radius: 50%;
+        animation: rotate 25s linear infinite;
+    }
+
+    header::after {
+        content: "";
+        position: absolute;
+        width: 700px;
+        height: 700px;
+        border: 1px solid rgba(212,175,55,.06);
+        border-radius: 50%;
+        animation: rotateReverse 35s linear infinite;
+    }
+
+    .hero {
+        position: relative;
+        z-index: 2;
+        max-width: 1000px;
+    }
+
+    .eyebrow {
+        color: #b99527;
+        letter-spacing: 7px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .hero h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(65px, 12vw, 150px);
+        line-height: .85;
+        letter-spacing: 8px;
+        color: #d4af37;
+        text-shadow: 0 8px 40px rgba(212,175,55,.2);
+    }
+
+    .hero h2 {
+        margin-top: 24px;
+        font-size: clamp(18px, 3vw, 30px);
+        letter-spacing: 5px;
+        color: #f5f0dc;
+        font-weight: 400;
+    }
+
+    .hero p {
+        margin: 25px auto;
+        max-width: 650px;
+        color: #aaa;
+        line-height: 1.8;
+        font-size: 16px;
+    }
+
+    .gold-line {
+        width: 100px;
+        height: 2px;
+        background: #d4af37;
+        margin: 30px auto;
+        box-shadow: 0 0 15px rgba(212,175,55,.5);
+    }
+
+    .badge {
+        display: inline-block;
+        border: 1px solid #6d581b;
+        padding: 12px 24px;
+        color: #d4af37;
+        letter-spacing: 3px;
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    @keyframes rotate {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes rotateReverse {
+        to { transform: rotate(-360deg); }
+    }
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+        gap: 35px;
+        padding: 17px;
+        background: rgba(3,3,3,.94);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #33280d;
+    }
+
+    nav a {
+        color: #aaa;
+        text-decoration: none;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: .3s;
+    }
+
+    nav a:hover {
+        color: #d4af37;
+    }
+
+    /* =========================================================
+       SECTIONS
+       ========================================================= */
+
+    section {
+        max-width: 1100px;
+        margin: auto;
+        padding: 100px 25px;
+    }
+
+    .section-label {
+        color: #a78620;
+        font-size: 11px;
+        letter-spacing: 5px;
+        margin-bottom: 12px;
+    }
+
+    .section-title {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(34px, 6vw, 58px);
+        color: #d4af37;
+        margin-bottom: 50px;
+    }
+
+    /* Product */
+
+    .product-card {
+        border: 1px solid #4d3d13;
+        background: linear-gradient(145deg, #111, #070707);
+        padding: 50px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 70px rgba(0,0,0,.5);
+    }
+
+    .product-card::before {
+        content: "GOLD";
+        position: absolute;
+        right: -30px;
+        top: 10px;
+        font-size: 120px;
+        font-weight: 900;
+        color: rgba(212,175,55,.025);
+    }
+
+    .product-name {
+        font-family: Georgia, serif;
+        font-size: clamp(35px, 6vw, 70px);
+        color: #f4d76b;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
+    }
+
+    .product-description {
+        color: #aaa;
+        max-width: 700px;
+        line-height: 1.9;
+    }
+
+    .details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 35px;
+    }
+
+    .detail {
+        border-left: 2px solid #d4af37;
+        padding: 15px 20px;
+        background: #0b0b0b;
+    }
+
+    .detail small {
+        display: block;
+        color: #777;
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 7px;
+    }
+
+    .detail strong {
+        color: #eee;
+    }
+
+    /* Ingredients */
+
+    .ingredient-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .ingredient {
+        background: linear-gradient(160deg, #111, #080808);
+        border: 1px solid #3e3211;
+        padding: 35px 25px;
+        transition: .35s;
+    }
+
+    .ingredient:hover {
+        transform: translateY(-8px);
+        border-color: #d4af37;
+        box-shadow: 0 15px 35px rgba(212,175,55,.08);
+    }
+
+    .ingredient-number {
+        color: #6f5919;
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .ingredient h3 {
+        color: #d4af37;
+        font-family: Georgia, serif;
+        font-size: 28px;
+        margin: 20px 0 15px;
+    }
+
+    .ingredient p {
+        color: #999;
+        line-height: 1.7;
+        font-size: 14px;
+    }
+
+    /* Process */
+
+    .process {
+        position: relative;
+    }
+
+    .process::before {
+        content: "";
+        position: absolute;
+        left: 25px;
+        top: 190px;
+        bottom: 100px;
+        width: 1px;
+        background: linear-gradient(#d4af37, transparent);
+    }
+
+    .step {
+        position: relative;
+        padding-left: 65px;
+        margin-bottom: 30px;
+    }
+
+    .step-number {
+        position: absolute;
+        left: 10px;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #d4af37;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #d4af37;
+        font-size: 11px;
+        background: #050505;
+        z-index: 2;
+    }
+
+    .step h3 {
+        color: #eee;
+        font-size: 17px;
+        margin-bottom: 7px;
+    }
+
+    .step p {
+        color: #777;
+        font-size: 13px;
+    }
+
+    /* Group */
+
+    .group-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+    }
+
+    .member {
+        padding: 28px 12px;
+        text-align: center;
+        border: 1px solid #33280d;
+        background: #0c0c0c;
+        transition: .3s;
+    }
+
+    .member:hover {
+        border-color: #d4af37;
+        transform: translateY(-5px);
+    }
+
+    .member span {
+        display: block;
+        color: #6e591d;
+        font-size: 10px;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+    }
+
+    .member strong {
+        color: #e7d27a;
+        font-size: 14px;
+    }
+
+    /* Concept */
+
+    .concept {
+        border: 1px solid #4a3a12;
+        background:
+            radial-gradient(circle at 80% 20%, rgba(212,175,55,.08), transparent 30%),
+            #090909;
+        padding: 55px;
+    }
+
+    .concept h3 {
+        font-family: Georgia, serif;
+        font-size: 34px;
+        color: #d4af37;
+        margin-bottom: 20px;
+    }
+
+    .concept p {
+        color: #aaa;
+        line-height: 1.9;
+        max-width: 800px;
+    }
+
+    .quote {
+        margin-top: 35px;
+        padding: 20px 25px;
+        border-left: 2px solid #d4af37;
+        color: #e5d38b;
+        font-family: Georgia, serif;
+        font-size: 21px;
+        font-style: italic;
+    }
+
+    /* Dates */
+
+    .dates {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .date-card {
+        border: 1px solid #3d3010;
+        background: #0b0b0b;
+        padding: 35px;
+    }
+
+    .date-card span {
+        display: block;
+        color: #80691e;
+        font-size: 10px;
+        letter-spacing: 3px;
+        margin-bottom: 12px;
+    }
+
+    .date-card strong {
+        color: #d4af37;
+        font-family: Georgia, serif;
+        font-size: 28px;
+    }
+
+    /* Footer */
+
+    footer {
+        border-top: 1px solid #33280d;
+        padding: 60px 20px;
+        text-align: center;
+        background: #020202;
+    }
+
+    footer h2 {
+        color: #d4af37;
+        font-family: Georgia, serif;
+        letter-spacing: 6px;
+        margin-bottom: 12px;
+    }
+
+    footer p {
+        color: #666;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .footer-line {
+        width: 50px;
+        height: 1px;
+        background: #d4af37;
+        margin: 20px auto;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 800px) {
+        nav {
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .ingredient-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .group-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .details,
+        .dates {
+            grid-template-columns: 1fr;
+        }
+
+        .product-card,
+        .concept {
+            padding: 30px 22px;
+        }
+
+        .system-title {
+            letter-spacing: 5px;
+        }
+
+        .terminal {
+            padding: 18px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .terminal-lines {
+            font-size: 11px;
+        }
+
+        .hero h1 {
+            letter-spacing: 3px;
+        }
+
+        section {
+            padding: 70px 18px;
+        }
+    }
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     GOLD DROP HACKER-STYLE INTRO
-     ===================================================== -->
+<!-- =========================================================
+     CINEMATIC SYSTEM ACCESS
+     ========================================================= -->
 
 <div id="intro">
 
-  <div class="terminal">
+    <div class="grid"></div>
+    <div class="scanlines"></div>
 
-    <div class="terminal-top">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="terminal-title">
-        GOLD DROP // JAM WORLD
-      </div>
-    </div>
+    <div class="terminal">
 
-    <div class="big-drop">
-      GOLD DROP
-    </div>
+        <div class="terminal-header">
+            <span>GOLDDROP // SECURE TERMINAL</span>
+            <span class="danger">● SYSTEM ACTIVE</span>
+        </div>
 
-    <div class="terminal-log">
+        <div class="system-title">GOLD DROP</div>
 
-      <div>
-        <span class="log-gold">[BOOT]</span>
-        GOLD DROP SYSTEM INITIALIZING...
-      </div>
+        <div class="terminal-lines">
 
-      <div>
-        <span class="log-gold">[SCAN]</span>
-        PRODUCT IDENTIFIED:
-        <span class="log-white">GOLD DROP MANGO JAM</span>
-      </div>
+            <div>[BOOT] Initializing <span class="gold">GOLD DROP</span> environment...</div>
 
-      <div>
-        <span class="log-gold">[SCAN]</span>
-        FRESH MANGOES DETECTED 🥭
-      </div>
+            <div>[SCAN] Searching product database...</div>
 
-      <div>
-        <span class="log-gold">[PROCESS]</span>
-        MANGO PULP PREPARATION...
-      </div>
+            <div>[FOUND] <span class="gold">GOLD DROP MANGO JAM</span></div>
 
-      <div>
-        <span class="log-gold">[PROCESS]</span>
-        ADDING SUGAR...
-      </div>
+            <div>[SCAN] Fresh mangoes detected 🥭</div>
 
-      <div>
-        <span class="log-gold">[PROCESS]</span>
-        BALANCING CITRIC ACID...
-      </div>
+            <div>[PROCESS] Mango pulp preparation...</div>
 
-      <div>
-        <span class="log-gold">[PROCESS]</span>
-        CREATING GOLDEN TASTE...
-      </div>
+            <div>[PROCESS] Sugar balance established...</div>
 
-      <div>
-        <span class="log-green">[QUALITY]</span>
-        HOMEMADE QUALITY VERIFIED ✓
-      </div>
+            <div>[PROCESS] Citric acid balance established...</div>
 
-      <div>
-        <span class="log-green">[LOGGING]</span>
-        WELCOME, MUDITHA PERERA
-      </div>
+            <div>[QUALITY] Homemade quality verification: <span class="gold">PASSED ✓</span></div>
 
-      <div>
-        <span class="log-green">[ACCESS]</span>
-        ENTERING AMAZING JAM WORLD...
-      </div>
+            <div>[SECURITY] Golden taste protocol: <span class="gold">LOCKED</span></div>
 
-      <div>
-        <span class="log-gold">[STATUS]</span>
-        GOLD DROP READY <span class="cursor"></span>
-      </div>
+            <div>[ACCESS] Opening <span class="gold">GOLD DROP WORLD</span>...</div>
+
+        </div>
+
+        <div class="progress-container">
+            <div class="progress"></div>
+        </div>
+
+        <div class="access">
+            &gt;&gt; AUTHENTICATION COMPLETE // ENTERING SYSTEM &lt;&lt;
+        </div>
 
     </div>
-
-    <div class="loading-text">
-      INITIALIZING GOLDEN EXPERIENCE...
-    </div>
-
-    <div class="loading">
-      <div class="loading-bar"></div>
-    </div>
-
-  </div>
-
 </div>
 
 
-<!-- =====================================================
-     MAIN GOLD DROP WEBSITE
-     ===================================================== -->
+<!-- =========================================================
+     MAIN WEBSITE
+     ========================================================= -->
+
+<div id="website">
 
 <header>
 
-  <div class="brand">
-    GoldDrop Co.
-  </div>
+    <div class="hero">
 
-  <h1>GOLD DROP</h1>
+        <div class="eyebrow">GOLDDROP CO. • HOMEMADE QUALITY</div>
 
-  <h2>Mango Jam</h2>
+        <h1>GOLD DROP</h1>
 
-  <p class="slogan">
-    Made with pure golden taste
-  </p>
+        <div class="gold-line"></div>
 
-  <div class="quality">
-    ✨ Made with Fresh Mangoes
-  </div>
+        <h2>MANGO JAM</h2>
 
-  <div class="hero-mango">
-    🥭
-  </div>
+        <p>
+            Fresh mangoes transformed into a rich golden spread,
+            crafted with care and made for pure golden taste.
+        </p>
+
+        <div class="badge">
+            Made with Fresh Mangoes
+        </div>
+
+    </div>
 
 </header>
 
 
-<main>
-
-  <!-- Product introduction -->
-
-  <section class="highlight">
-
-    <h2>
-      Fresh Mango. Golden Taste.
-    </h2>
-
-    <p>
-      A homemade mango jam created from fresh mangoes,
-      carefully prepared into a rich and delicious golden spread.
-    </p>
-
-  </section>
+<nav>
+    <a href="#product">Product</a>
+    <a href="#ingredients">Ingredients</a>
+    <a href="#process">Process</a>
+    <a href="#group">Our Group</a>
+</nav>
 
 
-  <!-- Ingredients -->
+<!-- PRODUCT -->
 
-  <section>
+<section id="product">
 
-    <h2>🍯 Ingredients</h2>
+    <div class="section-label">01 / PRODUCT</div>
 
-    <div class="ingredients">
+    <div class="section-title">The Golden Product</div>
 
-      <div class="ingredient">
-        <span>🥭</span>
-        Mango
-      </div>
+    <div class="product-card">
 
-      <div class="ingredient">
-        <span>🍚</span>
-        Sugar
-      </div>
+        <div class="product-name">
+            GOLD DROP MANGO JAM
+        </div>
 
-      <div class="ingredient">
-        <span>🧪</span>
-        Citric Acid
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- Group -->
-
-  <section>
-
-    <h2>👥 Our Group</h2>
-
-    <div class="members">
-
-      <div class="member">Dew</div>
-      <div class="member">Avin</div>
-      <div class="member">Eleesha</div>
-      <div class="member">Shainy</div>
-      <div class="member">Nithasa</div>
-
-    </div>
-
-  </section>
-
-
-  <!-- Process -->
-
-  <section>
-
-    <h2>🏭 From Mango to Jam</h2>
-
-    <div class="process">
-
-      <div class="step">Fresh Mangoes</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Wash & Peel</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Cut</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Pulp / Blend</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Add Sugar</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Cook</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Add Citric Acid</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Thicken</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Cool</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Sterilize & Fill</div>
-      <div class="arrow">→</div>
-
-      <div class="step">Seal & Label</div>
-
-    </div>
-
-  </section>
-
-
-  <!-- Why ingredients -->
-
-  <section>
-
-    <h2>🔬 Why These Ingredients?</h2>
-
-    <div class="why">
-
-      <div class="why-card">
-
-        <h3>🥭 Mango</h3>
-
-        <p>
-          Provides the main flavour, aroma, natural colour
-          and fruit pulp that makes the jam unmistakably mango.
+        <p class="product-description">
+            GoldDrop Co. presents a homemade mango jam made from
+            fresh mangoes. Our concept combines the natural golden
+            character of mango with a clean black-and-gold identity
+            for a premium homemade appearance.
         </p>
 
-      </div>
+        <div class="details">
 
+            <div class="detail">
+                <small>BRAND</small>
+                <strong>GoldDrop Co.</strong>
+            </div>
 
-      <div class="why-card">
+            <div class="detail">
+                <small>TYPE</small>
+                <strong>Homemade Mango Jam</strong>
+            </div>
 
-        <h3>🍚 Sugar</h3>
+            <div class="detail">
+                <small>SLOGAN</small>
+                <strong>Made with pure golden taste</strong>
+            </div>
 
-        <p>
-          Adds sweetness, helps the jam become thicker,
-          and contributes to its keeping quality.
-        </p>
+            <div class="detail">
+                <small>QUALITY</small>
+                <strong>Made with Fresh Mangoes</strong>
+            </div>
 
-      </div>
-
-
-      <div class="why-card">
-
-        <h3>🧪 Citric Acid</h3>
-
-        <p>
-          Adds a slight acidity and helps create the acidic
-          environment needed for good jam texture and preservation.
-        </p>
-
-      </div>
+        </div>
 
     </div>
 
-  </section>
+</section>
 
 
-  <!-- Brand concept -->
+<!-- INGREDIENTS -->
 
-  <section class="concept">
+<section id="ingredients">
 
-    <h2>✨ The GoldDrop Concept</h2>
+    <div class="section-label">02 / INGREDIENTS</div>
 
-    <p>
-      GoldDrop Co. brings together fresh mango, golden colour
-      and homemade quality. The black-and-gold identity gives
-      the product a premium appearance while the mango imagery
-      communicates its natural fruit ingredient.
-    </p>
+    <div class="section-title">What Makes It Gold</div>
 
-    <div class="quote">
-      🥭 Fresh mango. Golden taste. Homemade goodness.
+    <div class="ingredient-grid">
+
+        <div class="ingredient">
+
+            <div class="ingredient-number">01 / MAIN</div>
+
+            <h3>Mango</h3>
+
+            <p>
+                The main ingredient that gives the jam its
+                fruit flavour, aroma, natural colour and pulp.
+            </p>
+
+        </div>
+
+
+        <div class="ingredient">
+
+            <div class="ingredient-number">02 / SWEETNESS</div>
+
+            <h3>Sugar</h3>
+
+            <p>
+                Adds sweetness, helps the jam thicken and
+                improves its keeping quality.
+            </p>
+
+        </div>
+
+
+        <div class="ingredient">
+
+            <div class="ingredient-number">03 / BALANCE</div>
+
+            <h3>Citric Acid</h3>
+
+            <p>
+                Provides acidity and tang while helping create
+                an acidic environment for texture and preservation.
+            </p>
+
+        </div>
+
     </div>
 
-  </section>
+</section>
 
 
-  <!-- Dates -->
+<!-- PROCESS -->
 
-  <section>
+<section id="process" class="process">
 
-    <h2>📅 Product Dates</h2>
+    <div class="section-label">03 / PRODUCTION</div>
+
+    <div class="section-title">From Mango to Jam</div>
+
+
+    <div class="step">
+        <div class="step-number">01</div>
+        <h3>Fresh Mangoes</h3>
+        <p>Start with fresh mangoes.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">02</div>
+        <h3>Wash & Peel</h3>
+        <p>Clean and prepare the mangoes.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">03</div>
+        <h3>Cut</h3>
+        <p>Cut the prepared mangoes into pieces.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">04</div>
+        <h3>Pulp / Blend</h3>
+        <p>Turn the mango pieces into smooth fruit pulp.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">05</div>
+        <h3>Add Sugar</h3>
+        <p>Add sugar to create the desired sweetness.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">06</div>
+        <h3>Cook</h3>
+        <p>Cook the mixture while it develops its jam consistency.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">07</div>
+        <h3>Add Citric Acid</h3>
+        <p>Balance the mixture with citric acid.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">08</div>
+        <h3>Thicken</h3>
+        <p>Continue until the desired jam consistency is reached.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">09</div>
+        <h3>Cool</h3>
+        <p>Allow the finished jam to cool.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">10</div>
+        <h3>Sterilize & Fill</h3>
+        <p>Prepare the jar and fill it with the finished jam.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">11</div>
+        <h3>Seal</h3>
+        <p>Secure the jar properly.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">12</div>
+        <h3>Label</h3>
+        <p>Finish the GoldDrop Co. product presentation.</p>
+    </div>
+
+</section>
+
+
+<!-- GROUP -->
+
+<section id="group">
+
+    <div class="section-label">04 / OUR GROUP</div>
+
+    <div class="section-title">GoldDrop Co.</div>
+
+    <div class="group-grid">
+
+        <div class="member">
+            <span>MEMBER 01</span>
+            <strong>Dew</strong>
+        </div>
+
+        <div class="member">
+            <span>MEMBER 02</span>
+            <strong>Avin</strong>
+        </div>
+
+        <div class="member">
+            <span>MEMBER 03</span>
+            <strong>Eleesha</strong>
+        </div>
+
+        <div class="member">
+            <span>MEMBER 04</span>
+            <strong>Shainy</strong>
+        </div>
+
+        <div class="member">
+            <span>MEMBER 05</span>
+            <strong>Nithasa</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BRAND CONCEPT -->
+
+<section>
+
+    <div class="section-label">05 / BRAND IDENTITY</div>
+
+    <div class="section-title">Why GoldDrop?</div>
+
+    <div class="concept">
+
+        <h3>Fresh Mango. Golden Taste.</h3>
+
+        <p>
+            The GoldDrop Co. identity combines fresh mango,
+            golden colour and homemade quality. The black-and-gold
+            presentation gives the product a premium appearance,
+            while the mango concept communicates the natural fruit
+            ingredient behind the jam.
+        </p>
+
+        <div class="quote">
+            “Fresh mango. Golden taste. Homemade goodness.”
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DATES -->
+
+<section>
+
+    <div class="section-label">06 / PRODUCT DETAILS</div>
+
+    <div class="section-title">Product Dates</div>
 
     <div class="dates">
 
-      <div class="date-box">
+        <div class="date-card">
+            <span>MAN DATE</span>
+            <strong>23 / 09 / 2026</strong>
+        </div>
 
-        <strong>
-          Manufacture Date
-        </strong>
-
-        <span>
-          23 September 2026
-        </span>
-
-      </div>
-
-
-      <div class="date-box">
-
-        <strong>
-          Expiration Date
-        </strong>
-
-        <span>
-          23 October 2026
-        </span>
-
-      </div>
+        <div class="date-card">
+            <span>EXP DATE</span>
+            <strong>23 / 10 / 2026</strong>
+        </div>
 
     </div>
 
-  </section>
-
-</main>
+</section>
 
 
 <footer>
 
-  <strong>
-    GoldDrop Co. — Mango Jam
-  </strong>
+    <h2>GOLDDROP CO.</h2>
 
-  <br>
+    <div class="footer-line"></div>
 
-  Made with fresh mangoes • Made with pure golden taste
+    <p>GOLD DROP MANGO JAM • MADE WITH FRESH MANGOES</p>
 
 </footer>
+
+</div>
 
 </body>
 </html>
